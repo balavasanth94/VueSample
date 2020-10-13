@@ -9,7 +9,7 @@
   <input id=user-name v-model="name" placeholder="User Name"/>
   </div>
 <div id="conditional-rendering" class="dynamic">
-<button v-on:click="userCheck">Security Check</button>
+<button v-on:click="userCheck($event)">Security Check</button>
 <div id="rendering" v-if="securety" class="dynamic">
   <SecurityTag :name="name"/>
   </div>
@@ -29,7 +29,7 @@ import SecurityTag from './SecurityTag.vue'
 export default {
   data() {
     return {
-        Usercheck: false,
+      securety:false,
       timer: 0,
        message: 'Current Date with Time ' + new Date().toLocaleString(),
        name:"Bala"       
@@ -47,11 +47,13 @@ export default {
         .reverse()
         .join('')
     },
-    userCheck() {
-      if(this.securety===true){
-        this.securety=false
+    userCheck(e) {
+      if(e.target.innerText==="Security Uncheck"){
+        this.securety=false;
+        e.target.innerText="Security Check"
       }else{
-this.securety=true
+this.securety=true;
+        e.target.innerText="Security Uncheck"
       }
     }
   },

@@ -1,6 +1,15 @@
 <template>
 <div v-if="userCheck()" class="pass">
-<span>{{ name }} is valid user name</span>
+<span>{{ name }} is valid user name  </span>
+<button v-on:click="userList($event)">Show User List</button>
+<div id="list-rendering" v-if="list">
+    <ol>
+  <li v-for="user in userlist" v-bind:key="user">
+      {{ user.name }}
+    </li>
+    </ol>
+</div>
+
 </div>
 <div v-else>
 <div v-if="emptyCheck()" class="need">
@@ -16,12 +25,31 @@ Please enter the valid user name
 
 <script>
 export default {
+    data() {
+    return {
+        list:false,
+      userlist: [
+        { name: 'Bala' },
+        { name: 'Vasanth' },
+        { name: 'Dinsh' }
+      ]
+    }
+  },
     methods: {
     userCheck() {
         return this.name==="Bala"
     },
     emptyCheck() {
         return this.name===""
+    },
+    userList(e){
+      if(e.target.innerText==="Show User List"){
+        this.list=true;
+        e.target.innerText="Hide User List"
+      }else{
+        this.list=false;
+        e.target.innerText="Show User List"
+      }
     }
   },
 name: 'SecurityTag',
@@ -34,12 +62,12 @@ props: {
 
 <style scoped>
 .pass{
-    font-color:green;
+    color:green;
 }
 .fail{
-    font-color:red;
+    color:red;
 }
 .need{
-    font-color:blue;
+    color:blue;
 }
 </style>
